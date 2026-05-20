@@ -3,6 +3,7 @@ package dev.adamassistant;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -78,7 +79,7 @@ public final class AdamAssistant {
     }
 
     private static void giveItem(ServerPlayerEntity player, String itemRequest) {
-        if (REQUIRE_OP_FOR_GIVE && !player.hasPermissionLevel(2)) {
+        if (REQUIRE_OP_FOR_GIVE && !CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK).test(player.getCommandSource())) {
             reply(player, "Выдача предметов отключена для игроков без OP.");
             return;
         }
@@ -118,7 +119,11 @@ public final class AdamAssistant {
         }
 
         try {
-            player.getServer().getCommandManager().parseAndExecute(player.getCommandSource(), cleanCommand);
+            player.getCommandSource()
+                    .getServer()
+                    .getCommandManager()
+                    .parseAndExecute(player.getCommandSource(), cleanCommand);
+
             reply(player, "Команда отправлена: /" + cleanCommand);
         } catch (Exception exception) {
             reply(player, "Не смог выполнить команду: " + exception.getMessage());
