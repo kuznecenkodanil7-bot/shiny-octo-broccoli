@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "adam_assistant",
+  "version": "${version}",
+  "name": "Adam Assistant",
+  "description": "Chat assistant for Minecraft: write messages that start with 'адам', for example: 'адам дай бревно акации'.",
+  "authors": ["ChatGPT"],
+  "contact": {},
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.adamassistant.AdamAssistantMod"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric-api": "*",
+    "minecraft": "~1.21.11",
+    "java": ">=21"
+  }
+}
